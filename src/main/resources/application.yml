@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: pure-awesomeness
+  servlet:
+    multipart:
+      max-file-size: 2MB
+
+server:
+  http2:
+    enabled: true
+
+graphql:
+  servlet:
+    actuator-metrics: true
+    async-timeout: 1000
+  playground:
+    enabled: true
+    cdn:
+      enabled: false
+      version: latest
+
+
+
+

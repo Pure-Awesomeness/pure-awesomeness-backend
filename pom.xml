@@ -15,40 +15,43 @@
     <version>${project.version}</version>
 
     <properties>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.version>1.0-SNAPSHOT</project.version>
-        <graphql.version>12.0.0</graphql.version>
-        <pmd.version>3.11.0</pmd.version>
+        <graphql.version>18.0</graphql.version>
+        <graphql-spring-boot-starters.version>12.0.0</graphql-spring-boot-starters.version>
+        <pmd.version>3.16.0</pmd.version>
+        <spring-boot.version>2.6.5</spring-boot.version>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.graphql-java-kickstart</groupId>
             <artifactId>graphql-spring-boot-starter</artifactId>
-            <version>${graphql.version}</version>
+            <version>${graphql-spring-boot-starters.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!--  TEST DEPENDENCIES -->
+        <dependency>
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>graphql-spring-boot-starter-test</artifactId>
+            <version>${graphql-spring-boot-starters.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <showDeprecation>true</showDeprecation>
-                    <compilerVersion>${java.version}</compilerVersion>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
