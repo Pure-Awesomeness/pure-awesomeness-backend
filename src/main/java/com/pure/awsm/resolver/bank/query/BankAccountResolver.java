@@ -1,7 +1,6 @@
-package com.pure.awsm.resolver;
+package com.pure.awsm.resolver.bank.query;
 
 import com.pure.awsm.domain.bank.BankAccount;
-import com.pure.awsm.domain.bank.Client;
 import com.pure.awsm.domain.bank.Currency;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,7 @@ public class BankAccountResolver implements GraphQLQueryResolver {
 
         return BankAccount.builder()
                 .id(id)
-                .client(Client.builder().firstName("Tapan").lastName("Sabat").build())
+                //.client(Client.builder().firstName("Tapan").lastName("Sabat").build())
                 .currency(Currency.USD)
                 .build();
     }

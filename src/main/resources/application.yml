@@ -12,12 +12,25 @@ server:
 graphql:
   servlet:
     actuator-metrics: true
-    async-timeout: 1000
+    async-timeout: 10000
+    max-query-depth: 5
+    exception-handlers-enabled: false
+
+  # Turn OFF in PRODUCTION
   playground:
     enabled: true
-    cdn:
-      enabled: false
-      version: latest
+    tabs:
+      - name: Get Bank Account
+        headers:
+          SomeHeader: Some value
+        query: classpath:playground/get_bank_account.graphql
+        variables: classpath:playground/bank_account_variables.json
+      - name: Create Bank Account
+        query: classpath:playground/create_bank_account.graphql
+        variables: classpath:playground/bank_account_variables.json
+  # Turn OFF in PRODUCTION
+  voyager:
+    enabled: true
 
 
 

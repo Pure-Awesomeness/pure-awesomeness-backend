@@ -1,0 +1,9 @@
+# Create bank account
+mutation CREATE_BANK_ACCOUNT {
+    createBankAccount(input: { firstName: "" }) {
+        id
+        client {
+            firstName
+        }
+    }
+}
