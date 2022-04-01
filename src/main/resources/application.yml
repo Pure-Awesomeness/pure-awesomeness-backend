@@ -6,6 +6,8 @@ spring:
       max-file-size: 2MB
 
 server:
+  servlet:
+    context-path: /pure-awesomeness
   http2:
     enabled: true
 
@@ -16,21 +18,23 @@ graphql:
     max-query-depth: 5
     exception-handlers-enabled: false
 
-  # Turn OFF in PRODUCTION
+  ####################################### DEV Configs START #######################################
+  ##### Turn OFF in PRODUCTION #####
   playground:
     enabled: true
     tabs:
-      - name: Get Bank Account
+      - name: Bank
         headers:
           SomeHeader: Some value
-        query: classpath:playground/get_bank_account.graphql
-        variables: classpath:playground/bank_account_variables.json
-      - name: Create Bank Account
-        query: classpath:playground/create_bank_account.graphql
-        variables: classpath:playground/bank_account_variables.json
-  # Turn OFF in PRODUCTION
+        query: classpath:playground/bank.graphql
+        variables: classpath:playground/variables/bank_account_variables.json
+      - name: Movies
+        query: classpath:playground/movies.graphql
+  ############# Turn OFF in PRODUCTION #############
   voyager:
     enabled: true
+
+  ####################################### DEV Configs END #######################################
 
 
 API_KEY: e7ca0ae7a80530814607bea559a6c827
