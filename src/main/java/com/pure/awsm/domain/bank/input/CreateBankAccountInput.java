@@ -8,4 +8,6 @@ import javax.validation.constraints.NotBlank;
 public class CreateBankAccountInput {
     @NotBlank
     String firstName;
+
+    int age;
 }

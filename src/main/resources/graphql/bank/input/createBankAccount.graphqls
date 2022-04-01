@@ -1,3 +1,4 @@
 input CreateBankAccountInput {
-    firstName: String!
+    firstName: String!,
+    age: NonNegativeInt!
 }

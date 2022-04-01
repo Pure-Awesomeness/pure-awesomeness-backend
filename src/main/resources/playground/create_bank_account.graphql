@@ -1,9 +1,11 @@
 # Create bank account
 mutation CREATE_BANK_ACCOUNT {
-    createBankAccount(input: { firstName: "" }) {
+    createBankAccount(input: { firstName: "" , age: 1}) {
         id
         client {
             firstName
         }
+        createdOn
+        createdAt
     }
 }

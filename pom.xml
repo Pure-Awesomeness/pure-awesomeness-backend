@@ -22,6 +22,7 @@
         <graphql-spring-boot-starters.version>12.0.0</graphql-spring-boot-starters.version>
         <pmd.version>3.16.0</pmd.version>
         <spring-boot.version>2.6.5</spring-boot.version>
+        <graphql.extended.scalars.version>17.0</graphql.extended.scalars.version>
     </properties>
 
     <dependencies>
@@ -38,6 +39,17 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-extended-scalars</artifactId>
+            <version>${graphql.extended.scalars.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.graphql-java</groupId>
+                    <artifactId>graphql-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--  TEST DEPENDENCIES -->
