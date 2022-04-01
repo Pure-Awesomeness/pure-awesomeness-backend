@@ -21,6 +21,7 @@ graphql:
   ####################################### DEV Configs START #######################################
   ##### Turn OFF in PRODUCTION #####
   playground:
+    endpoint: /pure-awesomeness/graphql
     enabled: true
     tabs:
       - name: Bank
