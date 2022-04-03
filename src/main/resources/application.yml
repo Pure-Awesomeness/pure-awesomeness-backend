@@ -6,8 +6,6 @@ spring:
       max-file-size: 2MB
 
 server:
-  servlet:
-    context-path: /pure-awesomeness
   http2:
     enabled: true
 
@@ -21,8 +19,11 @@ graphql:
   ####################################### DEV Configs START #######################################
   ##### Turn OFF in PRODUCTION #####
   playground:
-    endpoint: /pure-awesomeness/graphql
     enabled: true
+    headers:
+      Authorization: Bearer TOKEN
+      user_id: IDP|Philip
+      user_roles: get:bank_account
     tabs:
       - name: Bank
         headers:

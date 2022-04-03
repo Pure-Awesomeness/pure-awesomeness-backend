@@ -7,13 +7,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.validation.ConstraintViolationException;
+import java.nio.file.AccessDeniedException;
 
 @Component
 public class GraphqlExceptionHandler {
 
     @ExceptionHandler({GraphQLException.class, ConstraintViolationException.class})
     public ThrowableGraphQLError handle(Exception e) {
-        return new ThrowableGraphQLError(e);
+        return new ThrowableGraphQLError(e, e.getMessage());
+    }
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public ThrowableGraphQLError handle(AccessDeniedException e) {
+        return new ThrowableGraphQLError(e, HttpStatus.FORBIDDEN.getReasonPhrase());
     }
 
     @ExceptionHandler(RuntimeException.class)
