@@ -12,12 +12,11 @@
 
     <groupId>org.awesome</groupId>
     <artifactId>pure-awesomeness-backend</artifactId>
-    <version>${project.version}</version>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <project.version>1.0-SNAPSHOT</project.version>
         <graphql.version>18.0</graphql.version>
         <graphql-spring-boot-starters.version>12.0.0</graphql-spring-boot-starters.version>
         <pmd.version>3.16.0</pmd.version>
@@ -56,6 +55,12 @@
             </exclusions>
         </dependency>
 
+        <!--  DEV DEPENDENCIES -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
         <!--  TEST DEPENDENCIES -->
         <dependency>
             <groupId>com.graphql-java-kickstart</groupId>
@@ -68,6 +73,15 @@
 
     <build>
         <plugins>
+            <!--  Remote debugging capabilities via HTTP, -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludeDevtools>false</excludeDevtools>
+                </configuration>
+            </plugin>
+            <!--  STATIC SOURCE CODE ANALYZER that reports on issues found within application code -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
