@@ -1,0 +1,21 @@
+keytool -genkey -noprompt \
+-alias pure-awesomeness \
+-storetype PKCS12 \
+-keyalg RSA \
+-keysize 2048 \
+-dname "CN=pure-awesomeness" \
+-keystore pure-awesomeness-keystore.p12 \
+-validity 3650 \
+-storepass 123456 \
+-keypass 123456
+
+open -a Docker
+
+docker system prune -a
+
+docker-compose up -d
+
+docker images -a | grep "backend" | awk '{print $3}' | xargs docker rmi
+
+docker rmi $(docker images -a -q)
+

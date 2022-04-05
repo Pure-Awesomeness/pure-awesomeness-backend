@@ -1,0 +1,5 @@
+type NavigationTitle {
+    fetch: String,
+    title: String,
+    url: String,
+}

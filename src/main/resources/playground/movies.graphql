@@ -1,0 +1,8 @@
+# Gets Navigation
+query GET_NAVIGATION {
+    navigationTitles {
+        fetch,
+        title,
+        url
+    }
+}

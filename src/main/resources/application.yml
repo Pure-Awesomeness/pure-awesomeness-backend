@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: pure-awesomeness
+  profiles:
+    active:
+  servlet:
+    multipart:
+      max-file-size: 2MB
+  port: 443
+  ssl:
+    enabled: true
+    key-store: src/main/resources/keystore.p12
+    key-store-password: 123456
+    keyStoreType: PKCS12
+    keyAlias: pure-awesomeness
+    trust-store: src/main/resources/keystore.p12
+    trust-store-password: 123456
+  devtools:
+    remote:
+      secret: Shh... this is secret
+      debug:
+        local-port: 8010
+
+server:
+  http2:
+    enabled: true
+
+graphql:
+  servlet:
+    actuator-metrics: true
+    async-timeout: 10000
+    max-query-depth: 5
+    exception-handlers-enabled: false
+
+  ####################################### DEV Configs START #######################################
+  ##### Turn OFF in PRODUCTION #####
+  playground:
+    enabled: true
+    headers:
+      Authorization: Bearer TOKEN
+      user_id: IDP|Philip
+      user_roles: get:bank_account
+    tabs:
+      - name: Bank
+        headers:
+          SomeHeader: Some value
+        query: classpath:playground/bank.graphql
+        variables: classpath:playground/variables/bank_account_variables.json
+      - name: Movies
+        query: classpath:playground/movies.graphql
+  ############# Turn OFF in PRODUCTION #############
+  voyager:
+    enabled: true
+  ####################################### DEV Configs END #######################################
+
+
+API_KEY: e7ca0ae7a80530814607bea559a6c827
+
+
