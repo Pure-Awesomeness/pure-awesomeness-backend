@@ -1,6 +1,8 @@
 spring:
   application:
     name: pure-awesomeness
+  profiles:
+    active:
   servlet:
     multipart:
       max-file-size: 2MB

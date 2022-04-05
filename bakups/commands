@@ -8,3 +8,14 @@ keytool -genkey -noprompt \
 -validity 3650 \
 -storepass 123456 \
 -keypass 123456
+
+open -a Docker
+
+docker system prune -a
+
+docker-compose up -d
+
+docker images -a | grep "backend" | awk '{print $3}' | xargs docker rmi
+
+docker rmi $(docker images -a -q)
+
