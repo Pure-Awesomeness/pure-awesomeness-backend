@@ -9,27 +9,29 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./docker_volume/portainer-data:/data
+      - ${LOCALTIME}:/etc/localtime:ro
+      - ${DOCKER_SOCK}:/var/run/docker.sock:ro
+      - ${VOLUME}/portainer-data:/data
     ports:
       - ${PORTAINER_PORT}:9000
 
   jenkins:
     image: jenkins/jenkins:lts
-    privileged: true
+    container_name: jenkins
     restart: unless-stopped
+    privileged: true
     user: root
     ports:
       - ${JENKINS_PORT}:8080
       - 50000:50000
-    container_name: jenkins
     volumes:
-      - ./docker_volume/jenkins_configuration:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ${LOCALTIME}:/etc/localtime:ro
+      - ${VOLUME}/jenkins_configuration:/var/jenkins_home
+      - ${DOCKER_SOCK}:/var/run/docker.sock:ro
 
   backend:
     image: tapankumar/pure-awesomeness-backend:latest
+    container_name: backend
     depends_on:
       - portainer
     restart: on-failure
