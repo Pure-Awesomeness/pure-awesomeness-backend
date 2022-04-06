@@ -1,0 +1,1 @@
+docker build --build-arg REVISION=1.0.0 -t tapankumar/pure-awesomeness-backend .

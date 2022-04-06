@@ -1,21 +1,72 @@
-keytool -genkey -noprompt \
--alias pure-awesomeness \
--storetype PKCS12 \
--keyalg RSA \
--keysize 2048 \
--dname "CN=pure-awesomeness" \
--keystore pure-awesomeness-keystore.p12 \
--validity 3650 \
--storepass 123456 \
--keypass 123456
+$ keytool -genkey -noprompt \
+    -alias pure-awesomeness \
+    -storetype PKCS12 \
+    -keyalg RSA \
+    -keysize 2048 \
+    -dname "CN=pure-awesomeness" \
+    -keystore pure-awesomeness-keystore.p12 \
+    -validity 3650 \
+    -storepass 123456 \
+    -keypass 123456
 
-open -a Docker
+$ open -a Docker
 
-docker system prune -a
+$ docker system prune -a
 
-docker-compose up -d
+$ docker-compose up -d
 
-docker images -a | grep "backend" | awk '{print $3}' | xargs docker rmi
+$ docker images -a | grep "backend" | awk '{print $3}' | xargs docker rmi
 
-docker rmi $(docker images -a -q)
+$ docker rmi $(docker images -a -q)
 
+Caching Using BuildKit
+======================
+"features": {
+      "buildkit": true
+},
+
+Reduce DockerFile Size
+======================
+Check java dependencies
+$ jdeps -s pure-awesomeness-backend-1.0.0.jar
+pure-awesomeness-backend-1.0.0.jar -> java.base
+pure-awesomeness-backend-1.0.0.jar -> java.logging
+pure-awesomeness-backend-1.0.0.jar -> not found
+
+$ jdeps -s -cp target/app-1.0.0/BOOT-INF/lib/*.jar target/app-1.0.0.jar.original
+
+$ jdeps -s --multi-release 18 -cp pure-awesomeness-backend-1.0.0/BOOT-INF/lib/* pure-awesomeness-backend-1.0.0.jar.original
+
+Custom Runtime Execution
+------------------------
+$ jlink --no-header-files --no-man-pages --compress=2 --strip-debug --add-modules java.base,java.logging,java.sql,java.naming,java.management,java.instrument,java.desktop,java.security.jgss --output /usr/lib/jvm/spring-boot-runtime
+
+
+
+Install snyk
+=============
+$ npm install -g snyk
+$ snyk auth
+$ snyk container test openjdk:11-jre-slim@sha256:31a5d3fa2942eea891cf954f7d07359e09cf1b1f3d35fb32fedebb1e3399fc9e --file=Dockerfile
+
+Install kubectl on MAC
+=======================
+go to https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/
+$ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
+$ chmod +x kubectl
+$ mv ./kubectl /usr/local/bin/kubectl
+$ kubectl version --client
+
+Install K3D
+===========
+go to https://k3d.io/v5.4.1/
+$ curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | TAG=v5.0.0 bash
+$ k3d --help
+DOEST NOT WORK $ k3d cluster create portainer --api-port 6443 --servers 1 --agents 1 -p "30000-32767:30000-32767@server:0"
+$ k3d cluster create portainer
+$ docker container ls
+$ kubectl get pod -A
+$ kubectl get nodes
+$ k3d cluster create portainer-another
+$ k3d cluster delete portainer
+$ k3d cluster delete portainer-another
