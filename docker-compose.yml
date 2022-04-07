@@ -16,7 +16,7 @@ services:
       - ${PORTAINER_PORT}:9000
 
   jenkins:
-    image: jenkins/jenkins:lts
+    image: jenkins/jenkins:lts-slim@sha256:f23cee966c1e85a5dc3b4bfa644df12eae3c5dda9c0fd07b2f8eed6f624a0013
     container_name: jenkins
     restart: unless-stopped
     privileged: true

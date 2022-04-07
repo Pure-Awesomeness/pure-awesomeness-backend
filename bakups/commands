@@ -19,6 +19,8 @@ $ docker images -a | grep "backend" | awk '{print $3}' | xargs docker rmi
 
 $ docker rmi $(docker images -a -q)
 
+$ docker run -it WRITE_IMAGE_NAME_HERE /bin/bash
+
 Caching Using BuildKit
 ======================
 "features": {
@@ -39,8 +41,21 @@ $ jdeps -s --multi-release 18 -cp pure-awesomeness-backend-1.0.0/BOOT-INF/lib/* 
 
 Custom Runtime Execution
 ------------------------
-$ jlink --no-header-files --no-man-pages --compress=2 --strip-debug --add-modules java.base,java.logging,java.sql,java.naming,java.management,java.instrument,java.desktop,java.security.jgss --output /usr/lib/jvm/spring-boot-runtime
-
+$ jlink --no-header-files
+    --no-man-pages
+    --compress=2
+    --strip-debug
+    --output
+        /usr/lib/jvm/spring-boot-runtime
+    --add-modules
+        java.base,
+        java.logging,
+        java.sql,
+        java.naming,
+        java.management,
+        java.instrument,
+        java.desktop,
+        java.security.jgss
 
 
 Install snyk
