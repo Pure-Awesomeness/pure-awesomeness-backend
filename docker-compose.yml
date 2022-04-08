@@ -9,47 +9,57 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./docker_volume/portainer-data:/data
+      - ${LOCALTIME}:/etc/localtime:ro
+      - ${DOCKER_SOCK}:/var/run/docker.sock:ro
+      - ${VOLUME}/portainer-data:/data
     ports:
       - ${PORTAINER_PORT}:9000
 
   jenkins:
-    image: jenkins/jenkins:lts
-    privileged: true
+    image: jenkins/jenkins:lts-slim@sha256:f23cee966c1e85a5dc3b4bfa644df12eae3c5dda9c0fd07b2f8eed6f624a0013
+    container_name: jenkins
     restart: unless-stopped
+    privileged: true
     user: root
+    volumes:
+      - ${LOCALTIME}:/etc/localtime:ro
+      - ${VOLUME}/jenkins_configuration:/var/jenkins_home
+      - ${DOCKER_SOCK}:/var/run/docker.sock:ro
     ports:
       - ${JENKINS_PORT}:8080
       - 50000:50000
-    container_name: jenkins
-    volumes:
-      - ./docker_volume/jenkins_configuration:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
 
   backend:
     image: tapankumar/pure-awesomeness-backend:latest
+    container_name: backend
     depends_on:
       - portainer
     restart: on-failure
-    ports:
-      - ${APP_PORT}:8080
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+    ports:
+      - ${APP_PORT}:8080
+    networks:
+      - backend-network
 
   postgres:
     image: postgres
-    ports:
-      - ${DB_PORT}:5432
+    profiles:
+      - donotstart
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
-    profiles:
-      - donotstart
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
+    ports:
+      - ${DB_PORT}:5432
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge

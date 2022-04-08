@@ -1,1 +1,0 @@
-mvn clean package && docker build -t tapankumar/pure-awesomeness-backend .

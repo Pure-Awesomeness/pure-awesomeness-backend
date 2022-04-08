@@ -9,11 +9,11 @@ spring:
   port: 443
   ssl:
     enabled: true
-    key-store: src/main/resources/keystore.p12
+    key-store: src/main/resources/backend-keystore.p12
     key-store-password: 123456
     keyStoreType: PKCS12
     keyAlias: pure-awesomeness
-    trust-store: src/main/resources/keystore.p12
+    trust-store: src/main/resources/backend-keystore.p12
     trust-store-password: 123456
   devtools:
     remote:
